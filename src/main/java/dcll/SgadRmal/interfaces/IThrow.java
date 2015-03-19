@@ -15,4 +15,16 @@ public interface IThrow {
      * @param score     Number of pins knocked over
      */
     void setSecond(int score);
+
+    /**
+     *
+     * @return  Score of the first try
+     */
+    int getFirst();
+
+    /**
+     *
+     * @return  Score of the second try
+     */
+    int getSecond();
 }
