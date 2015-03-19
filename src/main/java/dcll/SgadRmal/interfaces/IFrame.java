@@ -6,13 +6,15 @@ package dcll.SgadRmal.interfaces;
 public interface IFrame {
     /**
      * Add a Throw to the game.
-     * @param t     Throw that will be added
+     *
+     * @param t Throw that will be added
      */
     void addThrow(IThrow t);
 
     /**
      * Calculate the score of a bowling game.
-     * @return  Score
+     *
+     * @return Score
      */
     int computeScore();
 }
