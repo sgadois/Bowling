@@ -5,3 +5,4 @@ package dcll.SgadRmal.interfaces;
  */
 public interface IFrame {
 }
+
