@@ -9,3 +9,4 @@ public interface IFrame {
     public void addThrow(Throw t);
     public int computeScore();
 }
+
