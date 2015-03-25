@@ -10,7 +10,7 @@ public class BonusErrorException extends Exception {
      *
      * @param message associated with the error
      */
-    public BonusErrorException(String message) {
+    public BonusErrorException(final String message) {
         super(message);
     }
 }
