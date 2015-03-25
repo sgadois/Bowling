@@ -16,7 +16,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 /**
- * Created by seb on 25/03/15.
+ * Created by Romain on 25/03/15.
  */
 public class FrameTest {
 
