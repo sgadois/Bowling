@@ -1,6 +1,6 @@
 package dcll.SgadRmal;
 
-import dcll.SgadRmal.exceptions.BonusErrorException;
+import dcll.SgadRmal.exceptions.LastThrowErrorException;
 import dcll.SgadRmal.implementation.Frame;
 import dcll.SgadRmal.implementation.Throw;
 import dcll.SgadRmal.interfaces.ILastThrow;
@@ -31,12 +31,12 @@ public class FrameTest {
         jeu = new Frame();
     }
 
-    @Test (expected = BonusErrorException.class)
+    @Test (expected = LastThrowErrorException.class)
     public void testAddLastThrowIllegalFirstThrow() {
         jeu.addLastThrow(lastLancer);
     }
 
-    @Test (expected = BonusErrorException.class)
+    @Test (expected = LastThrowErrorException.class)
     public void testAddLastThrowIllegalEighthThrow() {
         for (int i=0; i<8; ++i) {
             Throw unLancer = Mockito.mock(Throw.class);
