@@ -1,10 +1,12 @@
 package dcll.SgadRmal.implementation;
 
 
+import dcll.SgadRmal.interfaces.ILastThrow;
+
 /**
  * Created by seb on 19/03/15.
  */
-public class BonusThrow extends Throw {
+public class LastThrow extends Throw implements ILastThrow {
 
     @Override
     public void setFirst(int score) {
@@ -23,6 +25,16 @@ public class BonusThrow extends Throw {
 
     @Override
     public int getSecond() {
+        return 0;
+    }
+
+    @Override
+    public void setThird(int score) {
+
+    }
+
+    @Override
+    public int getThird() {
         return 0;
     }
 }

@@ -1,7 +1,7 @@
 package dcll.SgadRmal;
 
 import dcll.SgadRmal.exceptions.BonusErrorException;
-import dcll.SgadRmal.implementation.BonusThrow;
+import dcll.SgadRmal.implementation.LastThrow;
 import dcll.SgadRmal.implementation.Frame;
 import dcll.SgadRmal.implementation.Throw;
 import dcll.SgadRmal.interfaces.IThrow;
@@ -33,13 +33,13 @@ public class FrameTest {
 
     @Test(expected=BonusErrorException.class)
     public void testAddThrowBonusIllegal() {
-        bonus = Mockito.mock(BonusThrow.class);
+        bonus = Mockito.mock(LastThrow.class);
         jeu.addThrow(bonus);
     }
 
     @Test(expected=BonusErrorException.class)
     public void testAddThrowBonusNotAllowed() {
-        bonus = Mockito.mock(BonusThrow.class);
+        bonus = Mockito.mock(LastThrow.class);
         lancer = Mockito.mock(Throw.class);
         when(lancer.getFirst()).thenReturn(4);
         when(lancer.getSecond()).thenReturn(5);
@@ -71,7 +71,7 @@ public class FrameTest {
             when(strike.getFirst()).thenReturn(10);
             jeu.addThrow(strike);
         }
-        bonus = Mockito.mock(BonusThrow.class);
+        bonus = Mockito.mock(LastThrow.class);
         when(bonus.getFirst()).thenReturn(10);
         when(bonus.getSecond()).thenReturn(10);
         assertEquals(finalScore, jeu.computeScore());
@@ -86,7 +86,7 @@ public class FrameTest {
             when(unLancer.getSecond()).thenReturn(5);
             jeu.addThrow(unLancer);
         }
-        bonus = Mockito.mock(BonusThrow.class);
+        bonus = Mockito.mock(LastThrow.class);
         when(bonus.getFirst()).thenReturn(5);
         verify(bonus, never()).getSecond();
         assertEquals(finalScore, jeu.computeScore());
