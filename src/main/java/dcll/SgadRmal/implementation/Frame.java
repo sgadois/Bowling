@@ -9,12 +9,12 @@ import dcll.SgadRmal.interfaces.IThrow;
 public class Frame implements IFrame {
 
     @Override
-    public void addThrow(IThrow t) {
+    public void addThrow(final IThrow t) {
 
     }
 
     @Override
-    public int computeScore() {
+    public final int computeScore() {
         return 0;
     }
 }

@@ -7,22 +7,12 @@ package dcll.SgadRmal.implementation;
 public class BonusThrow extends Throw {
 
     @Override
-    public void setFirst(int score) {
+    public void setFirst(final int score) {
 
     }
 
     @Override
-    public void setSecond(int score) {
+    public void setSecond(final int score) {
 
-    }
-
-    @Override
-    public int getFirst() {
-        return 0;
-    }
-
-    @Override
-    public int getSecond() {
-        return 0;
     }
 }
