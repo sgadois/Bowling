@@ -3,6 +3,7 @@ package dcll.SgadRmal;
 import dcll.SgadRmal.exceptions.FirstTryNotDoneException;
 import dcll.SgadRmal.exceptions.IncorrectValueForTryException;
 import dcll.SgadRmal.implementation.Throw;
+import dcll.SgadRmal.implementation.ThrowType;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,6 +26,7 @@ public class ThrowTest {
         // Assertions
         Assert.assertEquals("The value of first try is -1", -1, lancer.getFirst());
         Assert.assertEquals("The value of second try is -1", -1, lancer.getSecond());
+        Assert.assertNull(lancer.getType());
     }
 
     @Test
@@ -54,6 +56,64 @@ public class ThrowTest {
         Assert.assertEquals(score, lancer.getSecond());
     }
 
+    @Test
+    public void testStrike() {
+
+        // Setup
+        final int score = 10;
+
+        // Code under test
+        lancer.setFirst(score);
+
+        // Assertions
+        Assert.assertEquals(score, lancer.getFirst());
+        Assert.assertEquals(ThrowType.STRIKE, lancer.getType());
+    }
+
+    @Test
+    public void testSpare() {
+
+        // Setup
+        final int score = 2;
+        lancer.setFirst(8);
+
+        // Code under test
+        lancer.setSecond(score);
+
+        // Assertions
+        Assert.assertEquals(score, lancer.getSecond());
+        Assert.assertEquals(ThrowType.SPARE, lancer.getType());
+    }
+
+    @Test
+    public void testNormal() {
+
+        // Setup
+        final int score = 1;
+        lancer.setFirst(3);
+
+        // Code under test
+        lancer.setSecond(score);
+
+        // Assertions
+        Assert.assertEquals(score, lancer.getSecond());
+        Assert.assertEquals(ThrowType.NORMAL, lancer.getType());
+    }
+
+    @Test
+    public void testTypeNotSetYet() {
+
+        // Setup
+        final int score = 5;
+
+        // Code under test
+        lancer.setFirst(score);
+
+        // Assertions
+        Assert.assertEquals(score, lancer.getFirst());
+        Assert.assertNull(lancer.getType());
+    }
+
     @Test(expected = FirstTryNotDoneException.class)
     public void testSetSecondBeforeFirst() {
 
@@ -67,27 +127,32 @@ public class ThrowTest {
     @Test(expected = IncorrectValueForTryException.class)
     public void testSetIncorrectValueFirstTry() {
 
+        // Setup
+        final int score = 11;
+
         // Code under test
-        lancer.setFirst(11);
+        lancer.setFirst(score);
     }
 
     @Test(expected = IncorrectValueForTryException.class)
     public void testSetIncorrectValueAfterStrike() {
 
         // Setup
+        final int score = 1;
         lancer.setFirst(10);
 
         // Code under test
-        lancer.setSecond(1);
+        lancer.setSecond(score);
     }
 
     @Test(expected = IncorrectValueForTryException.class)
     public void testSetTooMuchPinsKnockDown() {
 
         // Setup
+        final int score = 6;
         lancer.setFirst(5);
 
         // Code under test
-        lancer.setSecond(6);
+        lancer.setSecond(score);
     }
 }
