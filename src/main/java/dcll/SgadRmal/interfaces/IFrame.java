@@ -12,6 +12,13 @@ public interface IFrame {
     void addThrow(IThrow t);
 
     /**
+     * Add the last throw of the game
+     *
+     * @param t The last throw
+     */
+    void addLastThrow(ILastThrow t);
+
+    /**
      * Calculate the score of a bowling game.
      *
      * @return Score
