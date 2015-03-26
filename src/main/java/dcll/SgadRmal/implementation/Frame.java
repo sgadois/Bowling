@@ -20,7 +20,7 @@ public class Frame implements IFrame {
     }
 
     @Override
-    public int computeScore() {
+    public final int computeScore() {
         return 0;
     }
 }
