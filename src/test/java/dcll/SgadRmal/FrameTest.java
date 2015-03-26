@@ -1,6 +1,6 @@
 package dcll.SgadRmal;
 
-import dcll.SgadRmal.exceptions.BonusErrorException;
+import dcll.SgadRmal.exceptions.LastThrowErrorException;
 import dcll.SgadRmal.implementation.LastThrow;
 import dcll.SgadRmal.implementation.Frame;
 import dcll.SgadRmal.implementation.Throw;
@@ -31,19 +31,19 @@ public class FrameTest {
         jeu = new Frame();
     }
 
-    @Test(expected=BonusErrorException.class)
+    @Test(expected = LastThrowErrorException.class)
     public void testAddThrowBonusIllegal() {
         bonus = Mockito.mock(LastThrow.class);
         jeu.addThrow(bonus);
     }
 
-    @Test(expected=BonusErrorException.class)
+    @Test(expected = LastThrowErrorException.class)
     public void testAddThrowBonusNotAllowed() {
         bonus = Mockito.mock(LastThrow.class);
         lancer = Mockito.mock(Throw.class);
         when(lancer.getFirst()).thenReturn(4);
         when(lancer.getSecond()).thenReturn(5);
-        for (int i=0; i<9; ++i) {
+        for (int i = 0; i < 9; ++i) {
             Throw unLancer = Mockito.mock(Throw.class);
             jeu.addThrow(unLancer);
         }
@@ -54,7 +54,7 @@ public class FrameTest {
     @Test
     public void testComputeScoreNoBonus() {
         int finalScore = 80;
-        for (int i=0; i<10; ++i) {
+        for (int i = 0; i < 10; ++i) {
             Throw unLancer = Mockito.mock(Throw.class);
             when(unLancer.getFirst()).thenReturn(4);
             when(unLancer.getSecond()).thenReturn(4);
@@ -66,7 +66,7 @@ public class FrameTest {
     @Test
     public void testComputeScoreMaxScore() {
         int finalScore = 300;
-        for (int i=0; i<10; ++i) {
+        for (int i = 0; i < 10; ++i) {
             Throw strike = Mockito.mock(Throw.class);
             when(strike.getFirst()).thenReturn(10);
             jeu.addThrow(strike);
@@ -80,7 +80,7 @@ public class FrameTest {
     @Test
     public void testComputeScoreSpare() {
         int finalScore = 150;
-        for (int i=0; i<10; ++i) {
+        for (int i = 0; i < 10; ++i) {
             Throw unLancer = Mockito.mock(Throw.class);
             when(unLancer.getFirst()).thenReturn(5);
             when(unLancer.getSecond()).thenReturn(5);
