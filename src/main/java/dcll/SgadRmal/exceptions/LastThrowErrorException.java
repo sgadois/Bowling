@@ -6,7 +6,7 @@ package dcll.SgadRmal.exceptions;
 public class LastThrowErrorException extends Exception {
 
     /**
-     * Instance of BonusErrorMessage
+     * Instance of LastThrowErrorMessage.
      *
      * @param message associated with the error
      */

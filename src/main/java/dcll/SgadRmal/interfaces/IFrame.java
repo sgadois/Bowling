@@ -12,7 +12,7 @@ public interface IFrame {
     void addThrow(IThrow t);
 
     /**
-     * Add the last throw of the game
+     * Add the last throw of the game.
      *
      * @param t The last throw
      */

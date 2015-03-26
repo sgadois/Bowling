@@ -9,17 +9,17 @@ import dcll.SgadRmal.interfaces.ILastThrow;
 public class LastThrow extends Throw implements ILastThrow {
 
     @Override
-    public void setSecond(int score) {
+    public void setSecond(final int score) {
 
     }
 
     @Override
-    public void setThird(int score) {
+    public void setThird(final int score) {
 
     }
 
     @Override
-    public int getThird() {
+    public final int getThird() {
         return 0;
     }
 }

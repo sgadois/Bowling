@@ -8,27 +8,27 @@ import dcll.SgadRmal.interfaces.IThrow;
 public class Throw implements IThrow {
 
     @Override
-    final public void setFirst(int score) {
+    public final void setFirst(final int score) {
 
     }
 
     @Override
-    public void setSecond(int score) {
+    public void setSecond(final int score) {
 
     }
 
     @Override
-    final public int getFirst() {
+    public final int getFirst() {
         return 0;
     }
 
     @Override
-    final public int getSecond() {
+    public final int getSecond() {
         return 0;
     }
 
     @Override
-    final public ThrowType getType() {
+    public final ThrowType getType() {
         return null;
     }
 }
