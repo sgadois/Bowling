@@ -15,7 +15,9 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 /**
- * Created by Romain on 25/03/15.
+ * Created by seb on 19/03/15.
+ * @author Romain
+ *
  */
 public class FrameTest {
 
@@ -32,12 +34,12 @@ public class FrameTest {
     }
 
     @Test (expected = LastThrowErrorException.class)
-    public void testAddLastThrowIllegalFirstThrow() {
+    public void testAddLastThrowIllegalFirstThrow() throws LastThrowErrorException {
         jeu.addLastThrow(lastLancer);
     }
 
     @Test (expected = LastThrowErrorException.class)
-    public void testAddLastThrowIllegalEighthThrow() {
+    public void testAddLastThrowIllegalEighthThrow() throws LastThrowErrorException {
         for (int i=0; i<8; ++i) {
             Throw unLancer = Mockito.mock(Throw.class);
             jeu.addThrow(unLancer);
@@ -46,7 +48,7 @@ public class FrameTest {
     }
 
     @Test
-    public void testComputeScoreNoBonus() {
+    public void testComputeScoreNoBonus() throws LastThrowErrorException {
         when(lastLancer.getFirst()).thenReturn(4);
         when(lastLancer.getSecond()).thenReturn(4);
         int finalScore = 80;
@@ -64,7 +66,7 @@ public class FrameTest {
     }
 
     @Test
-    public void testComputeScoreMaxScore() {
+    public void testComputeScoreMaxScore() throws LastThrowErrorException {
         when(lastLancer.getFirst()).thenReturn(10);
         when(lastLancer.getSecond()).thenReturn(10);
         when(lastLancer.getThird()).thenReturn(10);
@@ -80,7 +82,7 @@ public class FrameTest {
     }
 
     @Test
-    public void testComputeScoreSpare() {
+    public void testComputeScoreSpare() throws LastThrowErrorException {
         when(lastLancer.getFirst()).thenReturn(5);
         when(lastLancer.getSecond()).thenReturn(5);
         when(lastLancer.getThird()).thenReturn(5);
@@ -97,7 +99,7 @@ public class FrameTest {
     }
 
     @Test
-    public void testComputeScoreStrikeSpare() {
+    public void testComputeScoreStrikeSpare() throws LastThrowErrorException {
         when(lastLancer.getFirst()).thenReturn(5);
         when(lastLancer.getSecond()).thenReturn(5);
         when(lastLancer.getThird()).thenReturn(10);
