@@ -1,5 +1,7 @@
 package dcll.SgadRmal.interfaces;
 
+import dcll.SgadRmal.implementation.ThrowType;
+
 /**
  * Created by seb on 19/03/15.
  */
@@ -27,4 +29,9 @@ public interface IThrow {
      * @return Score of the second try
      */
     int getSecond();
+
+    /**
+     * @return Type of the throw
+     */
+    ThrowType getType();
 }
