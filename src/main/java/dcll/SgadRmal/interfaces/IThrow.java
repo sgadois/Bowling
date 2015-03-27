@@ -1,5 +1,7 @@
 package dcll.SgadRmal.interfaces;
 
+import dcll.SgadRmal.exceptions.FirstTryNotDoneException;
+import dcll.SgadRmal.exceptions.IncorrectValueForTryException;
 import dcll.SgadRmal.implementation.ThrowType;
 
 /**
@@ -11,14 +13,14 @@ public interface IThrow {
      *
      * @param score Number of pins knocked over
      */
-    void setFirst(int score);
+    void setFirst(int score) throws IncorrectValueForTryException;
 
     /**
      * Set the score of the second try of the throw.
      *
      * @param score Number of pins knocked over
      */
-    void setSecond(int score);
+    void setSecond(int score) throws FirstTryNotDoneException, IncorrectValueForTryException;
 
     /**
      * @return Score of the first try

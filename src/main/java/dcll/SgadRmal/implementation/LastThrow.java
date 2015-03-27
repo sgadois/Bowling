@@ -8,6 +8,12 @@ import dcll.SgadRmal.interfaces.ILastThrow;
  */
 public class LastThrow extends Throw implements ILastThrow {
 
+    private int third;
+
+    public LastThrow() {
+        third = -1;
+    }
+
     @Override
     public void setSecond(final int score) {
 
