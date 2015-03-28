@@ -30,7 +30,7 @@ public class ThrowTest {
     }
 
     @Test
-    public void testSetFirst() {
+    public void testSetFirst() throws IncorrectValueForTryException {
 
         // Setup
         final int score = 5;
@@ -43,7 +43,7 @@ public class ThrowTest {
     }
 
     @Test
-    public void testSetSecond() {
+    public void testSetSecond() throws IncorrectValueForTryException, FirstTryNotDoneException {
 
         // Setup
         final int score = 5;
@@ -57,7 +57,7 @@ public class ThrowTest {
     }
 
     @Test
-    public void testStrike() {
+    public void testStrike() throws IncorrectValueForTryException {
 
         // Setup
         final int score = 10;
@@ -71,7 +71,7 @@ public class ThrowTest {
     }
 
     @Test
-    public void testSpare() {
+    public void testSpare() throws IncorrectValueForTryException, FirstTryNotDoneException {
 
         // Setup
         final int score = 2;
@@ -86,7 +86,7 @@ public class ThrowTest {
     }
 
     @Test
-    public void testNormal() {
+    public void testNormal() throws IncorrectValueForTryException, FirstTryNotDoneException {
 
         // Setup
         final int score = 1;
@@ -101,7 +101,7 @@ public class ThrowTest {
     }
 
     @Test
-    public void testTypeNotSetYet() {
+    public void testTypeNotSetYet() throws IncorrectValueForTryException {
 
         // Setup
         final int score = 5;
@@ -115,7 +115,7 @@ public class ThrowTest {
     }
 
     @Test(expected = FirstTryNotDoneException.class)
-    public void testSetSecondBeforeFirst() {
+    public void testSetSecondBeforeFirst() throws FirstTryNotDoneException, IncorrectValueForTryException {
 
         // Setup
         final int score = 5;
@@ -125,7 +125,7 @@ public class ThrowTest {
     }
 
     @Test(expected = IncorrectValueForTryException.class)
-    public void testSetIncorrectValueFirstTry() {
+    public void testSetIncorrectValueFirstTry() throws IncorrectValueForTryException {
 
         // Setup
         final int score = 11;
@@ -135,7 +135,7 @@ public class ThrowTest {
     }
 
     @Test(expected = IncorrectValueForTryException.class)
-    public void testSetIncorrectValueAfterStrike() {
+    public void testSetIncorrectValueAfterStrike() throws IncorrectValueForTryException, FirstTryNotDoneException {
 
         // Setup
         final int score = 1;
@@ -146,7 +146,7 @@ public class ThrowTest {
     }
 
     @Test(expected = IncorrectValueForTryException.class)
-    public void testSetTooMuchPinsKnockDown() {
+    public void testSetTooMuchPinsKnockDown() throws IncorrectValueForTryException, FirstTryNotDoneException {
 
         // Setup
         final int score = 6;
