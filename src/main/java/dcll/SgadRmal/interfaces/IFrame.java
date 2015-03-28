@@ -1,5 +1,7 @@
 package dcll.SgadRmal.interfaces;
 
+import dcll.SgadRmal.exceptions.LastThrowErrorException;
+
 /**
  * Created by seb on 19/03/15.
  */
@@ -16,7 +18,7 @@ public interface IFrame {
      *
      * @param t The last throw
      */
-    void addLastThrow(ILastThrow t);
+    void addLastThrow(ILastThrow t) throws LastThrowErrorException;
 
     /**
      * Calculate the score of a bowling game.
