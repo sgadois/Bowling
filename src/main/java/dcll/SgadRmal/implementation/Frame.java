@@ -45,6 +45,10 @@ public class Frame implements IFrame {
     public void addThrow(final IThrow t) {
         if (nbThrowDone < NB_THROW_GAME) {
             iThrows[nbThrowDone] = t;
+            score += t.getFirst();
+            if( t.getType() != ThrowType.STRIKE) {
+                score += t.getSecond();
+            }
         }
         nbThrowDone++;
     }
@@ -60,7 +64,46 @@ public class Frame implements IFrame {
 
     @Override
     public final int computeScore() {
-
+        int i;
+        for (i = 0; i < nbThrowDone - 2; i++) {
+            if( iThrows[i].getType() != ThrowType.NORMAL) {
+                score += iThrows[i + 1].getFirst();
+            }
+            if( iThrows[i].getType() == ThrowType.STRIKE) {
+                if (iThrows[i + 1].getType() == ThrowType.STRIKE) {
+                    score += iThrows[i + 2].getFirst();
+                } else {
+                    score += iThrows[i + 1].getSecond();
+                }
+            }
+        }
+        if( iThrows[i].getType() != ThrowType.NORMAL) {
+            score += iThrows[i + 1].getFirst();
+            if (iThrows[i + 1].getType() != ThrowType.STRIKE) {
+                score += iThrows[i + 1].getSecond();
+            } else if (iLastThrow != null) {
+                score += iLastThrow.getFirst();
+            }
+        }
+        if (iLastThrow != null) {
+            switch (iThrows[i + 1].getType()) {
+                case SPARE:
+                    score += iLastThrow.getFirst();
+                    break;
+                case STRIKE:
+                    score += iThrows[i + 1].getFirst();
+                    if (iThrows[i + 1].getType() != ThrowType.STRIKE) {
+                        score += iThrows[i + 1].getSecond();
+                    } else if (iLastThrow != null) {
+                        score += iLastThrow.getFirst();
+                    }
+            }
+            score += iLastThrow.getFirst();
+            score += iLastThrow.getSecond();
+            if(iLastThrow.getType() == ThrowType.STRIKE) {
+                score += iLastThrow.getThird();
+            }
+        }
         return score;
     }
 }
