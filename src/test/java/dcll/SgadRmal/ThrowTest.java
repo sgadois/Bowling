@@ -68,6 +68,8 @@ public class ThrowTest {
         // Assertions
         Assert.assertEquals(score, lancer.getFirst());
         Assert.assertEquals(ThrowType.STRIKE, lancer.getType());
+        Assert.assertEquals(10, lancer.getFirst() + lancer.getSecond());
+        Assert.assertEquals(0, lancer.getSecond());
     }
 
     @Test
@@ -83,12 +85,14 @@ public class ThrowTest {
         // Assertions
         Assert.assertEquals(score, lancer.getSecond());
         Assert.assertEquals(ThrowType.SPARE, lancer.getType());
+        Assert.assertEquals(10, lancer.getFirst() + lancer.getSecond());
     }
 
     @Test
     public void testNormal() throws IncorrectValueForTryException, FirstTryNotDoneException {
 
         // Setup
+        boolean normalThrow = false;
         final int score = 1;
         lancer.setFirst(3);
 
@@ -98,6 +102,10 @@ public class ThrowTest {
         // Assertions
         Assert.assertEquals(score, lancer.getSecond());
         Assert.assertEquals(ThrowType.NORMAL, lancer.getType());
+        if(lancer.getFirst() + lancer.getSecond() < 10) {
+            normalThrow = true;
+        }
+        Assert.assertTrue(normalThrow);
     }
 
     @Test
