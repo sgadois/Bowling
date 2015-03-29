@@ -60,7 +60,7 @@ public class LastThrowTest {
         // Assertions
         Assert.assertEquals(score, lastThrow.getSecond());
         Assert.assertEquals(-1, lastThrow.getThird());
-        Assert.assertEquals(ThrowType.SPARE, lastThrow.getThird());
+        Assert.assertEquals(ThrowType.SPARE, lastThrow.getType());
     }
 
     @Test
@@ -76,7 +76,7 @@ public class LastThrowTest {
         // Assertions
         Assert.assertEquals(score, lastThrow.getSecond());
         Assert.assertEquals(0, lastThrow.getThird());
-        Assert.assertEquals(ThrowType.NORMAL, lastThrow.getThird());
+        Assert.assertEquals(ThrowType.NORMAL, lastThrow.getType());
     }
 
     @Test(expected = IncorrectValueForTryException.class)
