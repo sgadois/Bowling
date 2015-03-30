@@ -3,6 +3,7 @@ package dcll.SgadRmal;
 import dcll.SgadRmal.exceptions.LastThrowErrorException;
 import dcll.SgadRmal.implementation.Frame;
 import dcll.SgadRmal.implementation.Throw;
+import dcll.SgadRmal.implementation.ThrowType;
 import dcll.SgadRmal.interfaces.ILastThrow;
 import dcll.SgadRmal.interfaces.IThrow;
 import org.junit.Before;
@@ -57,11 +58,13 @@ public class FrameTest {
     public void testComputeScoreNoBonus() throws LastThrowErrorException {
         when(lastLancer.getFirst()).thenReturn(4);
         when(lastLancer.getSecond()).thenReturn(4);
+        when(lastLancer.getType()).thenReturn(ThrowType.NORMAL);
         int finalScore = 80;
         for (int i=0; i<9; ++i) {
             Throw unLancer = PowerMockito.mock(Throw.class);
             when(unLancer.getFirst()).thenReturn(4);
             when(unLancer.getSecond()).thenReturn(4);
+            when(unLancer.getType()).thenReturn(ThrowType.NORMAL);
             jeu.addThrow(unLancer);
         }
         jeu.addLastThrow(lastLancer);
@@ -76,10 +79,12 @@ public class FrameTest {
         when(lastLancer.getFirst()).thenReturn(10);
         when(lastLancer.getSecond()).thenReturn(10);
         when(lastLancer.getThird()).thenReturn(10);
+        when(lastLancer.getType()).thenReturn(ThrowType.STRIKE);
         int finalScore = 300;
         for (int i=0; i<9; ++i) {
             Throw strike = PowerMockito.mock(Throw.class);
             when(strike.getFirst()).thenReturn(10);
+            when(strike.getType()).thenReturn(ThrowType.STRIKE);
             jeu.addThrow(strike);
         }
         jeu.addLastThrow(lastLancer);
@@ -92,11 +97,13 @@ public class FrameTest {
         when(lastLancer.getFirst()).thenReturn(5);
         when(lastLancer.getSecond()).thenReturn(5);
         when(lastLancer.getThird()).thenReturn(5);
+        when(lastLancer.getType()).thenReturn(ThrowType.SPARE);
         int finalScore = 150;
         for (int i=0; i<10; ++i) {
             Throw unLancer = PowerMockito.mock(Throw.class);
             when(unLancer.getFirst()).thenReturn(5);
             when(unLancer.getSecond()).thenReturn(5);
+            when(unLancer.getType()).thenReturn(ThrowType.SPARE);
             jeu.addThrow(unLancer);
         }
         jeu.addLastThrow(lastLancer);
@@ -109,13 +116,16 @@ public class FrameTest {
         when(lastLancer.getFirst()).thenReturn(5);
         when(lastLancer.getSecond()).thenReturn(5);
         when(lastLancer.getThird()).thenReturn(10);
+        when(lastLancer.getType()).thenReturn(ThrowType.SPARE);
 
         Throw strike = PowerMockito.mock(Throw.class);
         when(strike.getFirst()).thenReturn(10);
+        when(strike.getType()).thenReturn(ThrowType.STRIKE);
 
         Throw spare = PowerMockito.mock(Throw.class);
         when(spare.getFirst()).thenReturn(5);
         when(spare.getSecond()).thenReturn(5);
+        when(spare.getType()).thenReturn(ThrowType.SPARE);
 
         int finalScore = 200;
 
