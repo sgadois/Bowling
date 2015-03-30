@@ -29,8 +29,10 @@ public class Throw implements IThrow {
             throw new IncorrectValueForTryException("Value is incorrect");
         else {
             first = score;
-            if (first == MAX)
+            if (first == MAX) {
                 type = ThrowType.STRIKE;
+                second = 0;
+            }
         }
     }
 

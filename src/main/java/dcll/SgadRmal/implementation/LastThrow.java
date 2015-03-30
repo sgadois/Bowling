@@ -15,6 +15,7 @@ public class LastThrow extends Throw implements ILastThrow {
     private boolean allowThird;
 
     public LastThrow() {
+        super();
         third = -1;
         allowThird = false;
     }
