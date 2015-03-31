@@ -52,9 +52,6 @@ public class LastThrow extends Throw implements ILastThrow {
         else if (score < MIN || score > MAX) {
             throw new InvalidScoreException(ERR_VALUE);
         }
-        else if (second < MAX && second + score > MAX) {
-            throw new InvalidScoreException(ERR_TOO_HIGH);
-        }
         else {
             third = score;
         }
