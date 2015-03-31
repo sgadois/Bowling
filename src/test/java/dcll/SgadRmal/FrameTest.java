@@ -72,6 +72,7 @@ public class FrameTest {
 
     @Test (expected = InvalidFrameException.class)
     public void testAddLastThrowIllegalFirstThrow() throws InvalidFrameException {
+        when(lastLancer.getType()).thenReturn(ThrowType.NORMAL);
         jeu.addLastThrow(lastLancer);
     }
 
