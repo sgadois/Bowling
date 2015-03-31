@@ -165,4 +165,14 @@ public class LastThrowTest {
         lastThrow.setThird(score);
     }
 
+    @Test(expected = InvalidScoreException.class)
+    public void testSetTooMuchPinsKnockDown() throws InvalidScoreException {
+
+        // Setup
+        final int score = 6;
+        lastThrow.setFirst(5);
+
+        // Code under test
+        lastThrow.setSecond(score);
+    }
 }
