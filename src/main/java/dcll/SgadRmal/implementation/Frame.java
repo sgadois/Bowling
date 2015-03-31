@@ -1,6 +1,6 @@
 package dcll.SgadRmal.implementation;
 
-import dcll.SgadRmal.exceptions.LastThrowErrorException;
+import dcll.SgadRmal.exceptions.InvalidFrameException;
 import dcll.SgadRmal.interfaces.IFrame;
 import dcll.SgadRmal.interfaces.ILastThrow;
 import dcll.SgadRmal.interfaces.IThrow;
@@ -42,68 +42,78 @@ public class Frame implements IFrame {
     }
 
     @Override
-    public void addThrow(final IThrow t) {
-        if (nbThrowDone < NB_THROW_GAME) {
+    public void addThrow(final IThrow t) throws InvalidFrameException {
+        if (t.getType() == null) {
+            throw new InvalidFrameException("Invalid throw type");
+        } else if (nbThrowDone >= NB_THROW_GAME) {
+            throw new InvalidFrameException("Too many throw");
+        } else {
             iThrows[nbThrowDone] = t;
-            score += t.getFirst();
-            if( t.getType() != ThrowType.STRIKE) {
-                score += t.getSecond();
-            }
+            nbThrowDone++;
         }
-        nbThrowDone++;
     }
 
     @Override
-    public final void addLastThrow(final ILastThrow t) throws LastThrowErrorException {
-        if (nbThrowDone < NB_THROW_GAME) {
-            throw new LastThrowErrorException("Not enough throw done before the last");
+    public final void addLastThrow(final ILastThrow t) throws InvalidFrameException {
+        if (t.getType() == null) {
+            throw new InvalidFrameException("Invalid throw type");
+        } else if (nbThrowDone < NB_THROW_GAME) {
+            throw new InvalidFrameException("Not enough throw done before the last");
         } else {
             iLastThrow = t;
         }
     }
 
     @Override
-    public final int computeScore() {
-        int i;
-        for (i = 0; i < nbThrowDone - 2; i++) {
-            if( iThrows[i].getType() != ThrowType.NORMAL) {
-                score += iThrows[i + 1].getFirst();
-            }
-            if( iThrows[i].getType() == ThrowType.STRIKE) {
-                if (iThrows[i + 1].getType() == ThrowType.STRIKE) {
-                    score += iThrows[i + 2].getFirst();
-                } else {
-                    score += iThrows[i + 1].getSecond();
+    public final int computeScore() throws InvalidFrameException {
+        if (nbThrowDone < NB_THROW_GAME) {
+            throw new InvalidFrameException("Not enough throw done");
+        } else if (iLastThrow == null) {
+            throw new InvalidFrameException("Last throw not done");
+        } else {
+            for (int i = 0; i < nbThrowDone; i++) {
+                switch (iThrows[i].getType()) {
+                    case NORMAL:
+                        score += iThrows[i].getFirst();
+                        score += iThrows[i].getSecond();
+                        break;
+                    case SPARE:
+                        score += iThrows[i].getFirst();
+                        score += iThrows[i].getSecond();
+                        if (i == nbThrowDone - 1) {
+                            score += iLastThrow.getFirst();
+                        } else {
+                            score += iThrows[i + 1].getFirst();
+                        }
+                        break;
+                    case STRIKE:
+                        score += iThrows[i].getFirst();
+                        if (i == nbThrowDone - 2) {
+                            score += iThrows[i + 1].getFirst();
+                            if (iThrows[i + 1].getType() == ThrowType.STRIKE) {
+                                score += iLastThrow.getFirst();
+                            } else {
+                                score += iThrows[i + 1].getSecond();
+                            }
+                        } else if (i == nbThrowDone - 1) {
+                            score += iLastThrow.getFirst();
+                            score += iLastThrow.getSecond();
+                        } else {
+                            score += iThrows[i + 1].getFirst();
+                            if (iThrows[i + 1].getType() == ThrowType.STRIKE) {
+                                score += iThrows[i + 2].getFirst();
+                            } else {
+                                score += iThrows[i + 1].getSecond();
+                            }
+                        }
                 }
-            }
-        }
-        if( iThrows[i].getType() != ThrowType.NORMAL) {
-            score += iThrows[i + 1].getFirst();
-            if (iThrows[i + 1].getType() != ThrowType.STRIKE) {
-                score += iThrows[i + 1].getSecond();
-            } else if (iLastThrow != null) {
-                score += iLastThrow.getFirst();
-            }
-        }
-        if (iLastThrow != null) {
-            switch (iThrows[i + 1].getType()) {
-                case SPARE:
-                    score += iLastThrow.getFirst();
-                    break;
-                case STRIKE:
-                    score += iThrows[i + 1].getFirst();
-                    if (iThrows[i + 1].getType() != ThrowType.STRIKE) {
-                        score += iThrows[i + 1].getSecond();
-                    } else if (iLastThrow != null) {
-                        score += iLastThrow.getFirst();
-                    }
             }
             score += iLastThrow.getFirst();
             score += iLastThrow.getSecond();
-            if(iLastThrow.getType() == ThrowType.STRIKE) {
+            if (iLastThrow.getType() != ThrowType.NORMAL) {
                 score += iLastThrow.getThird();
             }
+            return score;
         }
-        return score;
     }
 }

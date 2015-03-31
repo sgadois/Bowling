@@ -11,7 +11,7 @@ public interface IFrame {
      *
      * @param t Throw that will be added
      */
-    void addThrow(IThrow t);
+    void addThrow(IThrow t) throws InvalidFrameException;
 
     /**
      * Add the last throw of the game.
@@ -25,6 +25,6 @@ public interface IFrame {
      *
      * @return Score
      */
-    int computeScore();
+    int computeScore() throws InvalidFrameException;
 }
 
