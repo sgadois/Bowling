@@ -1,16 +1,14 @@
 package dcll.SgadRmal;
 
-import dcll.SgadRmal.exceptions.LastThrowErrorException;
+import dcll.SgadRmal.exceptions.InvalidFrameException;
 import dcll.SgadRmal.implementation.Frame;
 import dcll.SgadRmal.implementation.Throw;
 import dcll.SgadRmal.implementation.ThrowType;
 import dcll.SgadRmal.interfaces.ILastThrow;
-import dcll.SgadRmal.interfaces.IThrow;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -20,17 +18,14 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 /**
- * Created by seb on 19/03/15.
- * @author Romain
- *
+ * Created by romain on 19/03/15.
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(Throw.class)
 public class FrameTest {
 
     private Frame jeu;
-    @Mock
-    private IThrow lancer;
+    private Throw[] listThrow;
     @Mock
     private ILastThrow lastLancer;
 
@@ -40,22 +35,82 @@ public class FrameTest {
         jeu = new Frame();
     }
 
-    @Test (expected = LastThrowErrorException.class)
-    public void testAddLastThrowIllegalFirstThrow() throws LastThrowErrorException {
+    /*
+     * Testing add throws methods
+     *
+     * 1. check if throw have a ThrowType
+     * 2. check that adding more than 9 Throws is impossible
+     * 3. check that a LastThrow isn't added before 9 Throws
+     */
+
+    @Test (expected = InvalidFrameException.class)
+    public void testAddThrowUndefinedType() throws InvalidFrameException {
+        Throw lancer = PowerMockito.mock(Throw.class);
+        when(lancer.getType()).thenReturn(null);
+        jeu.addThrow(lancer);
+    }
+
+    @Test (expected = InvalidFrameException.class)
+    public void testAddLastThrowUndefinedType() throws InvalidFrameException {
+        for (int i=0; i<9; ++i) {
+            Throw unLancer = PowerMockito.mock(Throw.class);
+            when(unLancer.getType()).thenReturn(ThrowType.NORMAL);
+            jeu.addThrow(unLancer);
+        }
+        when(lastLancer.getType()).thenReturn(null);
         jeu.addLastThrow(lastLancer);
     }
 
-    @Test (expected = LastThrowErrorException.class)
-    public void testAddLastThrowIllegalEighthThrow() throws LastThrowErrorException {
+    @Test (expected = InvalidFrameException.class)
+    public void testAddThrowMoreThanNine() throws InvalidFrameException {
+        for (int i=0; i<10; ++i) {
+            Throw unLancer = PowerMockito.mock(Throw.class);
+            when(unLancer.getType()).thenReturn(ThrowType.NORMAL);
+            jeu.addThrow(unLancer);
+        }
+    }
+
+    @Test (expected = InvalidFrameException.class)
+    public void testAddLastThrowIllegalFirstThrow() throws InvalidFrameException {
+        jeu.addLastThrow(lastLancer);
+    }
+
+    @Test (expected = InvalidFrameException.class)
+    public void testAddLastThrowIllegalEighthThrow() throws InvalidFrameException {
         for (int i=0; i<8; ++i) {
-            Throw unLancer = Mockito.mock(Throw.class);
+            Throw unLancer = PowerMockito.mock(Throw.class);
+            when(unLancer.getType()).thenReturn(ThrowType.NORMAL);
             jeu.addThrow(unLancer);
         }
         jeu.addLastThrow(lastLancer);
     }
 
+
+    /*
+     * Testing compute score method
+     *
+     * 1. Check that is impossible to compute an incomplete frame
+     * 2. Check value of the score returned
+     */
+
+    @Test (expected = InvalidFrameException.class)
+    public void testComputeScoreWithoutThrow() throws InvalidFrameException {
+        int score = jeu.computeScore();
+    }
+
+    @Test (expected = InvalidFrameException.class)
+    public void testComputeScoreWithoutLastThrow() throws InvalidFrameException {
+        for (int i=0; i<9; ++i) {
+            Throw unLancer = PowerMockito.mock(Throw.class);
+            when(unLancer.getType()).thenReturn(ThrowType.NORMAL);
+            jeu.addThrow(unLancer);
+        }
+        int score = jeu.computeScore();
+    }
+
     @Test
-    public void testComputeScoreNoBonus() throws LastThrowErrorException {
+    public void testComputeScoreOnlyNormalThrows() throws InvalidFrameException {
+        listThrow = new Throw[9];
         when(lastLancer.getFirst()).thenReturn(4);
         when(lastLancer.getSecond()).thenReturn(4);
         when(lastLancer.getType()).thenReturn(ThrowType.NORMAL);
@@ -66,16 +121,24 @@ public class FrameTest {
             when(unLancer.getSecond()).thenReturn(4);
             when(unLancer.getType()).thenReturn(ThrowType.NORMAL);
             jeu.addThrow(unLancer);
+            listThrow[i] = unLancer;
         }
         jeu.addLastThrow(lastLancer);
         int testScore = jeu.computeScore();
 
+        for (int i=0; i<9; ++i) {
+            verify(listThrow[i]).getFirst();
+            verify(listThrow[i]).getSecond();
+        }
+        verify(lastLancer).getFirst();
+        verify(lastLancer).getSecond();
         verify(lastLancer, never()).getThird();
         assertEquals(finalScore, testScore);
     }
 
     @Test
-    public void testComputeScoreMaxScore() throws LastThrowErrorException {
+    public void testComputeScoreOnlyStrike() throws InvalidFrameException {
+        listThrow = new Throw[9];
         when(lastLancer.getFirst()).thenReturn(10);
         when(lastLancer.getSecond()).thenReturn(10);
         when(lastLancer.getThird()).thenReturn(10);
@@ -86,33 +149,51 @@ public class FrameTest {
             when(strike.getFirst()).thenReturn(10);
             when(strike.getType()).thenReturn(ThrowType.STRIKE);
             jeu.addThrow(strike);
+            listThrow[i] = strike;
         }
         jeu.addLastThrow(lastLancer);
+        int testScore = jeu.computeScore();
 
-        assertEquals(finalScore, jeu.computeScore());
+        verify(listThrow[0]).getFirst();
+        verify(listThrow[1], times(2)).getFirst();
+        verify(listThrow[2], times(3)).getFirst();
+        verify(listThrow[8], times(3)).getFirst();
+        verify(lastLancer, times(3)).getFirst();
+        verify(lastLancer, times(2)).getSecond();
+        verify(lastLancer).getThird();
+        assertEquals(finalScore, testScore);
     }
 
     @Test
-    public void testComputeScoreSpare() throws LastThrowErrorException {
+    public void testComputeScoreOnlySpare() throws InvalidFrameException {
+        listThrow = new Throw[9];
         when(lastLancer.getFirst()).thenReturn(5);
         when(lastLancer.getSecond()).thenReturn(5);
         when(lastLancer.getThird()).thenReturn(5);
         when(lastLancer.getType()).thenReturn(ThrowType.SPARE);
         int finalScore = 150;
-        for (int i=0; i<10; ++i) {
+        for (int i=0; i<9; ++i) {
             Throw unLancer = PowerMockito.mock(Throw.class);
             when(unLancer.getFirst()).thenReturn(5);
             when(unLancer.getSecond()).thenReturn(5);
             when(unLancer.getType()).thenReturn(ThrowType.SPARE);
             jeu.addThrow(unLancer);
+            listThrow[i] = unLancer;
         }
         jeu.addLastThrow(lastLancer);
+        int testScore = jeu.computeScore();
 
-        assertEquals(finalScore, jeu.computeScore());
+        for (int i=0; i<8; ++i) {
+            verify(listThrow[i+1], times(2)).getFirst();
+        }
+        verify(lastLancer, times(2)).getFirst();
+        verify(lastLancer).getSecond();
+        verify(lastLancer).getThird();
+        assertEquals(finalScore, testScore);
     }
 
     @Test
-    public void testComputeScoreStrikeSpare() throws LastThrowErrorException {
+    public void testComputeScoreStrikeSpare() throws InvalidFrameException {
         when(lastLancer.getFirst()).thenReturn(5);
         when(lastLancer.getSecond()).thenReturn(5);
         when(lastLancer.getThird()).thenReturn(10);
@@ -140,6 +221,11 @@ public class FrameTest {
         jeu.addThrow(strike); // 20
         jeu.addLastThrow(lastLancer); // 20
 
-        assertEquals(finalScore, jeu.computeScore());
+        int testScore = jeu.computeScore();
+
+        verify(lastLancer, times(2)).getFirst();
+        verify(lastLancer, times(2)).getSecond();
+        verify(lastLancer).getThird();
+        assertEquals(finalScore, testScore);
     }
 }

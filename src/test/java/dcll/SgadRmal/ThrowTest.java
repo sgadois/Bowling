@@ -1,7 +1,6 @@
 package dcll.SgadRmal;
 
-import dcll.SgadRmal.exceptions.FirstTryNotDoneException;
-import dcll.SgadRmal.exceptions.IncorrectValueForTryException;
+import dcll.SgadRmal.exceptions.InvalidScoreException;
 import dcll.SgadRmal.implementation.Throw;
 import dcll.SgadRmal.implementation.ThrowType;
 import org.junit.Assert;
@@ -30,7 +29,7 @@ public class ThrowTest {
     }
 
     @Test
-    public void testSetFirst() throws IncorrectValueForTryException {
+    public void testSetFirst() throws InvalidScoreException {
 
         // Setup
         final int score = 5;
@@ -43,7 +42,7 @@ public class ThrowTest {
     }
 
     @Test
-    public void testSetSecond() throws IncorrectValueForTryException, FirstTryNotDoneException {
+    public void testSetSecond() throws InvalidScoreException {
 
         // Setup
         final int score = 5;
@@ -57,7 +56,7 @@ public class ThrowTest {
     }
 
     @Test
-    public void testStrike() throws IncorrectValueForTryException {
+    public void testStrike() throws InvalidScoreException {
 
         // Setup
         final int score = 10;
@@ -73,7 +72,7 @@ public class ThrowTest {
     }
 
     @Test
-    public void testSpare() throws IncorrectValueForTryException, FirstTryNotDoneException {
+    public void testSpare() throws InvalidScoreException {
 
         // Setup
         final int score = 2;
@@ -89,7 +88,7 @@ public class ThrowTest {
     }
 
     @Test
-    public void testNormal() throws IncorrectValueForTryException, FirstTryNotDoneException {
+    public void testNormal() throws InvalidScoreException {
 
         // Setup
         boolean normalThrow = false;
@@ -109,7 +108,7 @@ public class ThrowTest {
     }
 
     @Test
-    public void testTypeNotSetYet() throws IncorrectValueForTryException {
+    public void testTypeNotSetYet() throws InvalidScoreException {
 
         // Setup
         final int score = 5;
@@ -122,8 +121,8 @@ public class ThrowTest {
         Assert.assertNull(lancer.getType());
     }
 
-    @Test(expected = FirstTryNotDoneException.class)
-    public void testSetSecondBeforeFirst() throws FirstTryNotDoneException, IncorrectValueForTryException {
+    @Test(expected = InvalidScoreException.class)
+    public void testSetSecondBeforeFirst() throws InvalidScoreException {
 
         // Setup
         final int score = 5;
@@ -132,8 +131,8 @@ public class ThrowTest {
         lancer.setSecond(score);
     }
 
-    @Test(expected = IncorrectValueForTryException.class)
-    public void testSetIncorrectValueFirstTry() throws IncorrectValueForTryException {
+    @Test(expected = InvalidScoreException.class)
+    public void testSetIncorrectValueFirstTry() throws InvalidScoreException {
 
         // Setup
         final int score = 11;
@@ -142,8 +141,8 @@ public class ThrowTest {
         lancer.setFirst(score);
     }
 
-    @Test(expected = IncorrectValueForTryException.class)
-    public void testSetIncorrectValueAfterStrike() throws IncorrectValueForTryException, FirstTryNotDoneException {
+    @Test(expected = InvalidScoreException.class)
+    public void testSetIncorrectValueAfterStrike() throws InvalidScoreException {
 
         // Setup
         final int score = 1;
@@ -153,8 +152,8 @@ public class ThrowTest {
         lancer.setSecond(score);
     }
 
-    @Test(expected = IncorrectValueForTryException.class)
-    public void testSetTooMuchPinsKnockDown() throws IncorrectValueForTryException, FirstTryNotDoneException {
+    @Test(expected = InvalidScoreException.class)
+    public void testSetTooMuchPinsKnockDown() throws InvalidScoreException {
 
         // Setup
         final int score = 6;

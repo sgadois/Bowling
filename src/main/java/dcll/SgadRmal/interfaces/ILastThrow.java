@@ -1,7 +1,6 @@
 package dcll.SgadRmal.interfaces;
 
-import dcll.SgadRmal.exceptions.IncorrectValueForTryException;
-import dcll.SgadRmal.exceptions.SecondTryNotDoneException;
+import dcll.SgadRmal.exceptions.InvalidScoreException;
 
 /**
  * Created by Romain on 26/03/2015.
@@ -13,7 +12,7 @@ public interface ILastThrow extends IThrow {
      *
      * @param score Number of pins knocked over
      */
-    void setThird(int score) throws SecondTryNotDoneException, IncorrectValueForTryException;
+    void setThird(int score) throws InvalidScoreException;
 
     /**
      * @return Score of the third try
