@@ -1,6 +1,6 @@
 package dcll.SgadRmal.interfaces;
 
-import dcll.SgadRmal.exceptions.LastThrowErrorException;
+import dcll.SgadRmal.exceptions.InvalidFrameException;
 
 /**
  * Created by seb on 19/03/15.
@@ -18,7 +18,7 @@ public interface IFrame {
      *
      * @param t The last throw
      */
-    void addLastThrow(ILastThrow t) throws LastThrowErrorException;
+    void addLastThrow(ILastThrow t) throws InvalidFrameException;
 
     /**
      * Calculate the score of a bowling game.

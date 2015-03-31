@@ -1,13 +1,10 @@
 package dcll.SgadRmal.implementation;
 
-import dcll.SgadRmal.exceptions.FirstTryNotDoneException;
-import dcll.SgadRmal.exceptions.IncorrectValueForTryException;
+import dcll.SgadRmal.exceptions.InvalidScoreException;
 import dcll.SgadRmal.interfaces.IThrow;
 
 /**
- * Created by seb on 19/03/15.
- * @author Romain
- *
+ * Created by romain on 19/03/15.
  */
 public class Throw implements IThrow {
 
@@ -16,6 +13,8 @@ public class Throw implements IThrow {
     protected ThrowType type;
     protected final static int MIN = 0;
     protected final static int MAX = 10;
+    protected final static String ERR_TOO_HIGH = "Score is too high";
+    protected final static String ERR_VALUE = "Incorrect value for a score";
 
     public Throw() {
         first = -1;
@@ -24,22 +23,25 @@ public class Throw implements IThrow {
     }
 
     @Override
-    final public void setFirst(int score) throws IncorrectValueForTryException {
+    final public void setFirst(int score) throws InvalidScoreException {
         if (score < MIN || score > MAX)
-            throw new IncorrectValueForTryException("Value is incorrect");
+            throw new InvalidScoreException(ERR_VALUE);
         else {
             first = score;
-            if (first == MAX)
+            if (first == MAX) {
                 type = ThrowType.STRIKE;
+            }
         }
     }
 
     @Override
-    public void setSecond(int score) throws FirstTryNotDoneException, IncorrectValueForTryException {
+    public void setSecond(int score) throws InvalidScoreException {
         if (first < MIN)
-            throw new FirstTryNotDoneException("First try is not set");
-        else if (type == ThrowType.STRIKE || first + score > MAX)
-            throw new IncorrectValueForTryException("Value is incorrect");
+            throw new InvalidScoreException("First try not done");
+        else if (type == ThrowType.STRIKE)
+            throw new InvalidScoreException("Try not allowed");
+        else if (first + score > MAX)
+            throw new InvalidScoreException(ERR_TOO_HIGH);
         else {
             second = score;
             if (first + second == MAX)

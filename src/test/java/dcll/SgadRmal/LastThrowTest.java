@@ -1,8 +1,6 @@
 package dcll.SgadRmal;
 
-import dcll.SgadRmal.exceptions.FirstTryNotDoneException;
-import dcll.SgadRmal.exceptions.IncorrectValueForTryException;
-import dcll.SgadRmal.exceptions.SecondTryNotDoneException;
+import dcll.SgadRmal.exceptions.InvalidScoreException;
 import dcll.SgadRmal.implementation.LastThrow;
 import dcll.SgadRmal.implementation.ThrowType;
 import org.junit.Assert;
@@ -32,7 +30,7 @@ public class LastThrowTest {
     }
 
     @Test
-    public void testStrike() throws IncorrectValueForTryException {
+    public void testStrike() throws InvalidScoreException {
 
         // Setup
         final int score = 10;
@@ -48,7 +46,7 @@ public class LastThrowTest {
     }
 
     @Test
-    public void testSpare() throws IncorrectValueForTryException, FirstTryNotDoneException {
+    public void testSpare() throws InvalidScoreException {
 
         // Setup
         final int score = 5;
@@ -64,7 +62,7 @@ public class LastThrowTest {
     }
 
     @Test
-    public void testNormal() throws IncorrectValueForTryException, FirstTryNotDoneException {
+    public void testNormal() throws InvalidScoreException {
 
         // Setup
         final int score = 2;
@@ -79,8 +77,8 @@ public class LastThrowTest {
         Assert.assertEquals(ThrowType.NORMAL, lastThrow.getType());
     }
 
-    @Test(expected = IncorrectValueForTryException.class)
-    public void testSetIncorrectValueSecondTry() throws IncorrectValueForTryException, FirstTryNotDoneException {
+    @Test(expected = InvalidScoreException.class)
+    public void testSetIncorrectValueSecondTry() throws InvalidScoreException {
 
         // Setup
         final int score = 51;
@@ -90,8 +88,8 @@ public class LastThrowTest {
         lastThrow.setSecond(score);
     }
 
-    @Test(expected = IncorrectValueForTryException.class)
-    public void testSetIncorrectValueThirdTry() throws IncorrectValueForTryException, FirstTryNotDoneException, SecondTryNotDoneException {
+    @Test(expected = InvalidScoreException.class)
+    public void testSetIncorrectValueThirdTry() throws InvalidScoreException {
 
         // Setup
         final int score = 27;
@@ -102,8 +100,8 @@ public class LastThrowTest {
         lastThrow.setThird(score);
     }
 
-    @Test(expected = SecondTryNotDoneException.class)
-    public void testSetThirdBeforeSecond() throws IncorrectValueForTryException, SecondTryNotDoneException {
+    @Test(expected = InvalidScoreException.class)
+    public void testSetThirdBeforeSecond() throws InvalidScoreException {
 
         // Setup
         final int score = 7;
@@ -112,8 +110,8 @@ public class LastThrowTest {
         lastThrow.setThird(score);
     }
 
-    @Test(expected = IncorrectValueForTryException.class)
-    public void testSetThirdTryInNormalThrow() throws IncorrectValueForTryException, FirstTryNotDoneException, SecondTryNotDoneException {
+    @Test(expected = InvalidScoreException.class)
+    public void testSetThirdTryInNormalThrow() throws InvalidScoreException {
 
         // Setup
         final int score = 6;
