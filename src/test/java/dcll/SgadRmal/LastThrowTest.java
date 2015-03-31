@@ -19,6 +19,39 @@ public class LastThrowTest {
         lastThrow = new LastThrow();
     }
 
+    @Test
+    public void testSetSecond() throws InvalidScoreException {
+
+        // Setup
+        final int score = 5;
+        lastThrow.setFirst(2);
+
+        // Code under test
+        lastThrow.setSecond(score);
+
+        // Assertions
+        Assert.assertEquals(2, lastThrow.getFirst());
+        Assert.assertEquals(score, lastThrow.getSecond());
+    }
+
+    @Test
+    public void testSetThird() throws InvalidScoreException {
+
+        // Setup
+        final int score = 5;
+        lastThrow.setFirst(2);
+        lastThrow.setSecond(8);
+
+        // Code under test
+        lastThrow.setThird(score);
+
+        // Assertions
+        Assert.assertEquals(2, lastThrow.getFirst());
+        Assert.assertEquals(8, lastThrow.getSecond());
+        Assert.assertEquals(score, lastThrow.getThird());
+        Assert.assertEquals(ThrowType.SPARE, lastThrow.getType());
+    }
+
 
     @Test
     public void testCreateLastThrow() {
@@ -98,6 +131,16 @@ public class LastThrowTest {
 
         // Code under test
         lastThrow.setThird(score);
+    }
+
+    @Test(expected = InvalidScoreException.class)
+    public void testSetSecondBeforeFirst() throws InvalidScoreException {
+
+        // Setup
+        final int score = 5;
+
+        // Code under test
+        lastThrow.setSecond(score);
     }
 
     @Test(expected = InvalidScoreException.class)
