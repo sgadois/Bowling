@@ -9,12 +9,12 @@ import dcll.SgadRmal.exceptions.InvalidScoreException;
 public class LastThrow extends AThrow {
 
     /**
-     * The third score if spare or strike
+     * The third score if spare or strike.
      */
     private int third;
 
     /**
-     * LastThrow constructor
+     * LastThrow constructor.
      */
     public LastThrow() {
         super();
@@ -25,51 +25,44 @@ public class LastThrow extends AThrow {
     public final void setSecond(final int score) throws InvalidScoreException {
         if (getFirst() < MIN) {
             throw new InvalidScoreException("First try not done");
-        }
-        else if (score < MIN || score > MAX) {
+        } else if (score < MIN || score > MAX) {
             throw new InvalidScoreException(ERR_VALUE);
-        }
-        else if (getType() != ThrowType.STRIKE && getFirst() + score > MAX) {
+        } else if (getType() != ThrowType.STRIKE && getFirst() + score > MAX) {
             throw new InvalidScoreException(ERR_TOO_HIGH);
-        }
-        else {
+        } else {
             setHisSecond(score);
-            if (getFirst() + getSecond() == MAX || getType() == ThrowType.STRIKE) {
-                if (getType() == null) {
+            if (getType() == null) {
+                if (getFirst() + getSecond() == MAX) {
                     setType(ThrowType.SPARE);
+                } else {
+                    setType(ThrowType.NORMAL);
+                    third = 0;
                 }
-            }
-            else {
-                setType(ThrowType.NORMAL);
-                third = 0;
             }
         }
     }
 
     /**
-     * If type strike or spare player can have a last try
+     * If type strike or spare player can have a last try.
      *
-     * @param score of the bonus score
-     * @throws InvalidScoreException
+     * @param score of the bonus score.
+     * @throws InvalidScoreException if invalid score.
      */
     public final void setThird(final int score) throws InvalidScoreException {
         if (this.getType() == ThrowType.NORMAL) {
             throw new InvalidScoreException("Try not allowed");
-        }
-        else if (this.getSecond() < MIN) {
+        } else if (this.getSecond() < MIN) {
             throw new InvalidScoreException("Second try not done");
-        }
-        else if (score < MIN || score > MAX) {
+        } else if (score < MIN || score > MAX) {
             throw new InvalidScoreException(ERR_VALUE);
-        }
-        else {
+        } else {
             third = score;
         }
     }
 
     /**
      *
-     * @return the third try score
+     * @return the third try score.
      */
     public final int getThird() {
         return third;
