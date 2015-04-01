@@ -8,14 +8,38 @@ import dcll.SgadRmal.interfaces.IThrow;
  */
 public class Throw implements IThrow {
 
-    protected int first;
-    protected int second;
-    protected ThrowType type;
-    protected final static int MIN = 0;
-    protected final static int MAX = 10;
-    protected final static String ERR_TOO_HIGH = "Score is too high";
-    protected final static String ERR_VALUE = "Incorrect value for a score";
+    /**
+     * Score for the first try.
+     */
+    private int first;
+    /**
+     * Score for the second try if not a strike.
+     */
+    private int second;
+    /**
+     * Type of the throw.
+     */
+    private ThrowType type;
+    /**
+     * Minimum score for a try.
+     */
+    protected static final int MIN = 0;
+    /**
+     * Maximum score for a try.
+     */
+    protected static final int MAX = 10;
+    /**
+     * Error message if attempt to score more then the max at the second try.
+     */
+    protected static final String ERR_TOO_HIGH = "Score is too high";
+    /**
+     * Error message if score is not between min and max value.
+     */
+    protected static final String ERR_VALUE = "Incorrect value for a score";
 
+    /**
+     * Constructor for Throw.
+     */
     public Throw() {
         first = -1;
         second = -1;
@@ -23,10 +47,10 @@ public class Throw implements IThrow {
     }
 
     @Override
-    final public void setFirst(int score) throws InvalidScoreException {
-        if (score < MIN || score > MAX)
+    public final void setFirst(final int score) throws InvalidScoreException {
+        if (score < MIN || score > MAX) {
             throw new InvalidScoreException(ERR_VALUE);
-        else {
+        } else {
             first = score;
             if (first == MAX) {
                 type = ThrowType.STRIKE;
@@ -35,34 +59,54 @@ public class Throw implements IThrow {
     }
 
     @Override
-    public void setSecond(int score) throws InvalidScoreException {
-        if (first < MIN)
+    public void setSecond(final int score) throws InvalidScoreException {
+        if (first < MIN) {
             throw new InvalidScoreException("First try not done");
-        else if (type == ThrowType.STRIKE)
+        } else if (type == ThrowType.STRIKE) {
             throw new InvalidScoreException("Try not allowed");
-        else if (first + score > MAX)
+        } else if (first + score > MAX) {
             throw new InvalidScoreException(ERR_TOO_HIGH);
-        else {
+        } else {
             second = score;
-            if (first + second == MAX)
+            if (first + second == MAX) {
                 type = ThrowType.SPARE;
-            else
+            } else {
                 type = ThrowType.NORMAL;
+            }
         }
     }
 
     @Override
-    final public int getFirst() {
+    public final int getFirst() {
         return first;
     }
 
     @Override
-    final public int getSecond() {
+    public final int getSecond() {
         return second;
     }
 
     @Override
-    final public ThrowType getType() {
+    public final ThrowType getType() {
         return type;
     }
+
+    /**
+     * Define the type of the throw.
+     *
+     * @param aType ThrowType
+     */
+    protected final void setType(final ThrowType aType) {
+        this.type = aType;
+    }
+
+    /**
+     * Define the score of the second try.
+     *
+     * @param score score of the try
+     */
+    protected final void setTheSecond(final int score) {
+        second = score;
+    }
+
 }
