@@ -53,7 +53,7 @@ public abstract class AThrow {
 
     /**
      *
-     * @return score of the first try
+     * @return score of the first try.
      */
     public final int getFirst() {
         return first;
@@ -61,7 +61,7 @@ public abstract class AThrow {
 
     /**
      *
-     * @return score of the second try
+     * @return score of the second try.
      */
     public final int getSecond() {
         return second;
@@ -69,7 +69,7 @@ public abstract class AThrow {
 
     /**
      *
-     * @return type of the throw
+     * @return type of the throw.
      */
     public final ThrowType getType() {
         return type;
@@ -77,16 +77,16 @@ public abstract class AThrow {
 
     /**
      *
-     * @param aType type to define the throw
+     * @param aType type to define the throw.
      */
     protected final void setType(final ThrowType aType) {
         type = aType;
     }
 
     /**
-     * Only for extended class to set the second try
+     * Only for extended class to set the second try.
      *
-     * @param aSecond score to the second try
+     * @param aSecond score to the second try.
      */
     protected final void setHisSecond(final int aSecond) {
         second = aSecond;
@@ -94,8 +94,8 @@ public abstract class AThrow {
 
     /**
      *
-     * @param score to record for the first try
-     * @throws InvalidScoreException
+     * @param score to record for the first try.
+     * @throws InvalidScoreException if score is invalid.
      */
     public final void setFirst(final int score) throws InvalidScoreException {
         if (score < MIN || score > MAX) {
@@ -110,8 +110,9 @@ public abstract class AThrow {
 
     /**
      *
-     * @param score to record for the second try
-     * @throws InvalidScoreException
+     * @param score to record for the second try.
+     * @throws InvalidScoreException if score is invalid.
      */
-    public abstract void setSecond(final int score) throws InvalidScoreException;
+    public abstract void setSecond(final int score)
+            throws InvalidScoreException;
 }
