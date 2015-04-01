@@ -2,14 +2,13 @@ package dcll.SgadRmal;
 
 import dcll.SgadRmal.exceptions.InvalidFrameException;
 import dcll.SgadRmal.implementation.Frame;
+import dcll.SgadRmal.implementation.LastThrow;
 import dcll.SgadRmal.implementation.Throw;
 import dcll.SgadRmal.implementation.ThrowType;
-import dcll.SgadRmal.interfaces.ILastThrow;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -21,17 +20,17 @@ import static org.mockito.Mockito.*;
  * Created by romain on 19/03/15.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(Throw.class)
+@PrepareForTest({Throw.class, LastThrow.class})
 public class FrameTest {
 
     private Frame jeu;
     private Throw[] listThrow;
     @Mock
-    private ILastThrow lastLancer;
+    private LastThrow lastLancer;
 
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        lastLancer = PowerMockito.mock(LastThrow.class);
         jeu = new Frame();
     }
 

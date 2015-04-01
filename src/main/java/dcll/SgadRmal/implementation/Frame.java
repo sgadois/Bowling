@@ -2,8 +2,6 @@ package dcll.SgadRmal.implementation;
 
 import dcll.SgadRmal.exceptions.InvalidFrameException;
 import dcll.SgadRmal.interfaces.IFrame;
-import dcll.SgadRmal.interfaces.ILastThrow;
-import dcll.SgadRmal.interfaces.IThrow;
 
 /**
  * Created by seb on 19/03/15.
@@ -18,12 +16,12 @@ public class Frame implements IFrame {
     /**
      * A table containing the throw of the game
      */
-    private IThrow iThrows[];
+    private Throw iThrows[];
 
     /**
      * The last throw of the game
      */
-    private ILastThrow iLastThrow;
+    private LastThrow iLastThrow;
 
     /**
      * The number of throw done
@@ -36,13 +34,13 @@ public class Frame implements IFrame {
     private int score;
 
     public Frame() {
-        iThrows = new IThrow[NB_THROW_GAME];
+        iThrows = new Throw[NB_THROW_GAME];
         score = 0;
         nbThrowDone = 0;
     }
 
     @Override
-    public void addThrow(final IThrow t) throws InvalidFrameException {
+    public void addThrow(final Throw t) throws InvalidFrameException {
         if (t.getType() == null) {
             throw new InvalidFrameException("Invalid throw type");
         } else if (nbThrowDone >= NB_THROW_GAME) {
@@ -54,7 +52,7 @@ public class Frame implements IFrame {
     }
 
     @Override
-    public final void addLastThrow(final ILastThrow t) throws InvalidFrameException {
+    public final void addLastThrow(final LastThrow t) throws InvalidFrameException {
         if (t.getType() == null) {
             throw new InvalidFrameException("Invalid throw type");
         } else if (nbThrowDone < NB_THROW_GAME) {

@@ -2,35 +2,40 @@ package dcll.SgadRmal.implementation;
 
 
 import dcll.SgadRmal.exceptions.InvalidScoreException;
-import dcll.SgadRmal.interfaces.ILastThrow;
 
 /**
  * Created by romain on 19/03/15.
  */
-public class LastThrow extends Throw implements ILastThrow {
+public class LastThrow extends AThrow {
 
+    /**
+     * The third score if spare or strike
+     */
     private int third;
 
+    /**
+     * LastThrow constructor
+     */
     public LastThrow() {
         super();
         third = -1;
     }
 
     @Override
-    public void setSecond(final int score) throws InvalidScoreException {
-        if (this.getFirst() < MIN) {
+    public final void setSecond(final int score) throws InvalidScoreException {
+        if (getFirst() < MIN) {
             throw new InvalidScoreException("First try not done");
         }
         else if (score < MIN || score > MAX) {
             throw new InvalidScoreException(ERR_VALUE);
         }
-        else if (this.getType() != ThrowType.STRIKE && this.getFirst() + score > MAX) {
+        else if (getType() != ThrowType.STRIKE && getFirst() + score > MAX) {
             throw new InvalidScoreException(ERR_TOO_HIGH);
         }
         else {
-            setTheSecond(score);
-            if (this.getFirst() + this.getSecond() == MAX || this.getType() == ThrowType.STRIKE) {
-                if (this.getType() == null) {
+            setHisSecond(score);
+            if (getFirst() + getSecond() == MAX || getType() == ThrowType.STRIKE) {
+                if (getType() == null) {
                     setType(ThrowType.SPARE);
                 }
             }
@@ -41,8 +46,13 @@ public class LastThrow extends Throw implements ILastThrow {
         }
     }
 
-    @Override
-    public void setThird(final int score) throws InvalidScoreException {
+    /**
+     * If type strike or spare player can have a last try
+     *
+     * @param score of the bonus score
+     * @throws InvalidScoreException
+     */
+    public final void setThird(final int score) throws InvalidScoreException {
         if (this.getType() == ThrowType.NORMAL) {
             throw new InvalidScoreException("Try not allowed");
         }
@@ -57,7 +67,10 @@ public class LastThrow extends Throw implements ILastThrow {
         }
     }
 
-    @Override
+    /**
+     *
+     * @return the third try score
+     */
     public final int getThird() {
         return third;
     }
