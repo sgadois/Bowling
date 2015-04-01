@@ -194,23 +194,31 @@ public class FrameTest {
 
     @Test
     public void testComputeScoreStrikeSpare() throws InvalidFrameException {
-        when(lastLancer.getFirst()).thenReturn(5);
+        when(lastLancer.getFirst()).thenReturn(10);
         when(lastLancer.getSecond()).thenReturn(5);
-        when(lastLancer.getThird()).thenReturn(10);
-        when(lastLancer.getType()).thenReturn(ThrowType.SPARE);
+        when(lastLancer.getThird()).thenReturn(5);
+        when(lastLancer.getType()).thenReturn(ThrowType.STRIKE);
 
         Throw strike = PowerMockito.mock(Throw.class);
         when(strike.getFirst()).thenReturn(10);
         when(strike.getType()).thenReturn(ThrowType.STRIKE);
+
+        Throw strikeToTest = PowerMockito.mock(Throw.class);
+        when(strikeToTest.getFirst()).thenReturn(10);
+        when(strikeToTest.getType()).thenReturn(ThrowType.STRIKE);
 
         Throw spare = PowerMockito.mock(Throw.class);
         when(spare.getFirst()).thenReturn(5);
         when(spare.getSecond()).thenReturn(5);
         when(spare.getType()).thenReturn(ThrowType.SPARE);
 
+        Throw spareToTest = PowerMockito.mock(Throw.class);
+        when(spareToTest.getFirst()).thenReturn(5);
+        when(spareToTest.getSecond()).thenReturn(5);
+        when(spareToTest.getType()).thenReturn(ThrowType.SPARE);
+
         int finalScore = 200;
 
-        jeu.addThrow(strike); // 20
         jeu.addThrow(spare); // 20
         jeu.addThrow(strike); // 20
         jeu.addThrow(spare); // 20
@@ -218,13 +226,17 @@ public class FrameTest {
         jeu.addThrow(spare); // 20
         jeu.addThrow(strike); // 20
         jeu.addThrow(spare); // 20
-        jeu.addThrow(strike); // 20
+        jeu.addThrow(strikeToTest); // 20
+        jeu.addThrow(spareToTest); // 20
         jeu.addLastThrow(lastLancer); // 20
 
         int testScore = jeu.computeScore();
 
+        verify(strikeToTest, times(2)).getFirst();
+        verify(spareToTest, times(2)).getFirst();
+        verify(spareToTest, times(2)).getSecond();
         verify(lastLancer, times(2)).getFirst();
-        verify(lastLancer, times(2)).getSecond();
+        verify(lastLancer).getSecond();
         verify(lastLancer).getThird();
         assertEquals(finalScore, testScore);
     }
