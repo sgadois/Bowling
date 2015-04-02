@@ -67,8 +67,7 @@ public class ThrowTest {
         // Assertions
         Assert.assertEquals(score, lancer.getFirst());
         Assert.assertEquals(ThrowType.STRIKE, lancer.getType());
-        Assert.assertEquals(10, lancer.getFirst() + lancer.getSecond());
-        Assert.assertEquals(0, lancer.getSecond());
+        Assert.assertEquals(-1, lancer.getSecond());
     }
 
     @Test
