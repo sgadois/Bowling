@@ -72,52 +72,94 @@ public class Frame implements IFrame {
         } else if (iLastThrow == null) {
             throw new InvalidFrameException("Last throw not done");
         } else {
-            for (int i = 0; i < nbThrowDone; i++) {
-                switch (iThrows[i].getType()) {
-                    case NORMAL:
-                        score += iThrows[i].getFirst();
-                        score += iThrows[i].getSecond();
-                        break;
-                    case SPARE:
-                        score += iThrows[i].getFirst();
-                        score += iThrows[i].getSecond();
-                        if (i == nbThrowDone - 1) {
-                            score += iLastThrow.getFirst();
-                        } else {
-                            score += iThrows[i + 1].getFirst();
-                        }
-                        break;
-                    case STRIKE:
-                        score += iThrows[i].getFirst();
-                        if (i == nbThrowDone - 2) {
-                            score += iThrows[i + 1].getFirst();
-                            if (iThrows[i + 1].getType() == ThrowType.STRIKE) {
-                                score += iLastThrow.getFirst();
-                            } else {
-                                score += iThrows[i + 1].getSecond();
-                            }
-                        } else if (i == nbThrowDone - 1) {
-                            score += iLastThrow.getFirst();
-                            score += iLastThrow.getSecond();
-                        } else {
-                            score += iThrows[i + 1].getFirst();
-                            if (iThrows[i + 1].getType() == ThrowType.STRIKE) {
-                                score += iThrows[i + 2].getFirst();
-                            } else {
-                                score += iThrows[i + 1].getSecond();
-                            }
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-            score += iLastThrow.getFirst();
-            score += iLastThrow.getSecond();
-            if (iLastThrow.getType() != ThrowType.NORMAL) {
-                score += iLastThrow.getThird();
-            }
+            canComputeScore();
             return score;
         }
     }
+
+    /**
+     * Add the score of all the throw into the score of the game.
+     */
+    private void canComputeScore() {
+        for (int i = 0; i < nbThrowDone; i++) {
+            switch (iThrows[i].getType()) {
+                case NORMAL:
+                    addScoreNormalThrow(i);
+                    break;
+                case SPARE:
+                    addScoreSpareThrow(i);
+                    break;
+                case STRIKE:
+                    addScoreStrikeThrow(i);
+                    break;
+                default:
+                    break;
+            }
+        }
+        addScoreLastThrow();
+    }
+
+    /**
+     * Add the score of the last throw to the score of the game.
+     */
+    private void addScoreLastThrow() {
+        score += iLastThrow.getFirst();
+        score += iLastThrow.getSecond();
+        if (iLastThrow.getType() != ThrowType.NORMAL) {
+            score += iLastThrow.getThird();
+        }
+    }
+
+    /**
+     * Add the score of a normal throw to the score of the game.
+     *
+     * @param i index of the throw
+     */
+    private void addScoreNormalThrow(final int i) {
+        score += iThrows[i].getFirst();
+        score += iThrows[i].getSecond();
+    }
+
+    /**
+     * Add the score of a spare throw to the score of the game.
+     *
+     * @param i index of the throw
+     */
+    private void addScoreSpareThrow(final int i) {
+        score += iThrows[i].getFirst();
+        score += iThrows[i].getSecond();
+        if (i == nbThrowDone - 1) {
+            score += iLastThrow.getFirst();
+        } else {
+            score += iThrows[i + 1].getFirst();
+        }
+    }
+
+    /**
+     * Add the score of a strike throw to the score of the game.
+     *
+     * @param i index of the throw
+     */
+    private void addScoreStrikeThrow(final int i) {
+        score += iThrows[i].getFirst();
+        if (i == nbThrowDone - 2) {
+            score += iThrows[i + 1].getFirst();
+            if (iThrows[i + 1].getType() == ThrowType.STRIKE) {
+                score += iLastThrow.getFirst();
+            } else {
+                score += iThrows[i + 1].getSecond();
+            }
+        } else if (i == nbThrowDone - 1) {
+            score += iLastThrow.getFirst();
+            score += iLastThrow.getSecond();
+        } else {
+            score += iThrows[i + 1].getFirst();
+            if (iThrows[i + 1].getType() == ThrowType.STRIKE) {
+                score += iThrows[i + 2].getFirst();
+            } else {
+                score += iThrows[i + 1].getSecond();
+            }
+        }
+    }
+
 }
