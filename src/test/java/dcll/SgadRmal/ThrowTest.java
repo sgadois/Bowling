@@ -100,7 +100,7 @@ public class ThrowTest {
         // Assertions
         Assert.assertEquals(score, lancer.getSecond());
         Assert.assertEquals(ThrowType.NORMAL, lancer.getType());
-        if(lancer.getFirst() + lancer.getSecond() < 10) {
+        if (lancer.getFirst() + lancer.getSecond() < 10) {
             normalThrow = true;
         }
         Assert.assertTrue(normalThrow);
@@ -131,13 +131,45 @@ public class ThrowTest {
     }
 
     @Test(expected = InvalidScoreException.class)
-    public void testSetIncorrectValueFirstTry() throws InvalidScoreException {
+    public void testSetIncorrectPositiveValueFirstTry() throws InvalidScoreException {
 
         // Setup
         final int score = 11;
 
         // Code under test
         lancer.setFirst(score);
+    }
+
+    @Test(expected = InvalidScoreException.class)
+    public void testSetIncorrectNegativeValueFirstTry() throws InvalidScoreException {
+
+        // Setup
+        final int score = -1;
+
+        // Code under test
+        lancer.setFirst(score);
+    }
+
+    @Test(expected = InvalidScoreException.class)
+    public void testSetIncorrectPositiveValueSecondTry() throws InvalidScoreException {
+
+        // Setup
+        final int score = 11;
+        lancer.setFirst(6);
+
+        // Code under test
+        lancer.setSecond(score);
+    }
+
+    @Test(expected = InvalidScoreException.class)
+    public void testSetIncorrectNegativeFirstTry() throws InvalidScoreException {
+
+        // Setup
+        final int score = -1;
+        lancer.setFirst(6);
+
+        // Code under test
+        lancer.setSecond(score);
     }
 
     @Test(expected = InvalidScoreException.class)

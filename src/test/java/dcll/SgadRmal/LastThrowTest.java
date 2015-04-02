@@ -111,7 +111,7 @@ public class LastThrowTest {
     }
 
     @Test(expected = InvalidScoreException.class)
-    public void testSetIncorrectValueSecondTry() throws InvalidScoreException {
+    public void testSetIncorrectPositiveValueSecondTry() throws InvalidScoreException {
 
         // Setup
         final int score = 51;
@@ -120,12 +120,35 @@ public class LastThrowTest {
         // Code under test
         lastThrow.setSecond(score);
     }
+    @Test(expected = InvalidScoreException.class)
+    public void testSetIncorrectNegativeValueSecondTry() throws InvalidScoreException {
+
+        // Setup
+        final int score = -18;
+        lastThrow.setFirst(1);
+
+        // Code under test
+        lastThrow.setSecond(score);
+    }
+
 
     @Test(expected = InvalidScoreException.class)
-    public void testSetIncorrectValueThirdTry() throws InvalidScoreException {
+    public void testSetIncorrectPositiveValueThirdTry() throws InvalidScoreException {
 
         // Setup
         final int score = 27;
+        lastThrow.setFirst(10);
+        lastThrow.setSecond(5);
+
+        // Code under test
+        lastThrow.setThird(score);
+    }
+
+    @Test(expected = InvalidScoreException.class)
+    public void testSetIncorrectNegativeValueThirdTry() throws InvalidScoreException {
+
+        // Setup
+        final int score = -5;
         lastThrow.setFirst(10);
         lastThrow.setSecond(5);
 
