@@ -20,6 +20,8 @@ public class Throw extends AThrow {
             throw new InvalidScoreException("First try not done");
         } else if (getType() == ThrowType.STRIKE) {
             throw new InvalidScoreException("Try not allowed");
+        } else if (score < MIN || score > MAX) {
+            throw new InvalidScoreException(ERR_VALUE);
         } else if (getFirst() + score > MAX) {
             throw new InvalidScoreException(ERR_TOO_HIGH);
         } else {
