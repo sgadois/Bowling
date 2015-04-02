@@ -109,7 +109,7 @@ public class Frame implements IFrame {
                         }
                         break;
                     default:
-                        throw new InvalidFrameException("Type of throw not supported");
+                        break;
                 }
             }
             score += iLastThrow.getFirst();
