@@ -9,30 +9,33 @@ import dcll.SgadRmal.interfaces.IFrame;
 public class Frame implements IFrame {
 
     /**
-     * The number of throw for a game, minus the last throw
+     * The number of throw for a game, minus the last throw.
      */
     private static final int NB_THROW_GAME = 9;
 
     /**
-     * A table containing the throw of the game
+     * A table containing the throw of the game.
      */
-    private Throw iThrows[];
+    private Throw[] iThrows;
 
     /**
-     * The last throw of the game
+     * The last throw of the game.
      */
     private LastThrow iLastThrow;
 
     /**
-     * The number of throw done
+     * The number of throw done.
      */
     private int nbThrowDone;
 
     /**
-     * The score of the game
+     * The score of the game.
      */
     private int score;
 
+    /**
+     * Constructor.
+     */
     public Frame() {
         iThrows = new Throw[NB_THROW_GAME];
         score = 0;
@@ -40,7 +43,7 @@ public class Frame implements IFrame {
     }
 
     @Override
-    public void addThrow(final Throw t) throws InvalidFrameException {
+    public final void addThrow(final Throw t) throws InvalidFrameException {
         if (t.getType() == null) {
             throw new InvalidFrameException("Invalid throw type");
         } else if (nbThrowDone >= NB_THROW_GAME) {
@@ -104,6 +107,9 @@ public class Frame implements IFrame {
                                 score += iThrows[i + 1].getSecond();
                             }
                         }
+                        break;
+                    default:
+                        throw new InvalidFrameException("Type of throw not supported");
                 }
             }
             score += iLastThrow.getFirst();
