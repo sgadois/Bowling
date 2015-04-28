@@ -8,7 +8,7 @@ import dcll.ftsq.ranking.Player;
  */
 public class Ranking implements InterfaceRanking {
     @Override
-    public Player[] rank(Player... array) {
+    public final Player[] rank(final Player... array) {
         Scoring scoring = new Scoring();
         Player temp;
         boolean permut = true;
@@ -17,7 +17,8 @@ public class Ranking implements InterfaceRanking {
         for (int i = array.length - 1; i > 1; i--) {
             j = i;
             while (permut || j == 1) {
-                if (scoring.calcScore(array[j].getGame()) > scoring.calcScore(array[j - 1].getGame())) {
+                if (scoring.calcScore(array[j].getGame())
+                        > scoring.calcScore(array[j - 1].getGame())) {
                     temp = array[j];
                     array[j] = array[j - 1];
                     array[j - 1] = temp;
