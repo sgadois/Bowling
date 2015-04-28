@@ -11,19 +11,21 @@ public class Ranking implements InterfaceRanking {
     public Player[] rank(Player... array) {
         Scoring scoring = new Scoring();
         Player temp;
-        boolean permut = false;
+        boolean permut = true;
+        int j;
 
-        for (int i = array.length; i > 0; i--) {
-            while(permut || i == 0) {
-                if (scoring.calcScore(array[i].getGame()) > scoring.calcScore(array[i - 1].getGame())) {
-                    temp = array[i];
-                    array[i] = array[i - 1];
-                    array[i - 1] = temp;
-                    permut = true;
-                    i++;
+        for (int i = array.length - 1; i > 1; i--) {
+            j = i;
+            while (permut || j == 1) {
+                if (scoring.calcScore(array[j].getGame()) > scoring.calcScore(array[j - 1].getGame())) {
+                    temp = array[j];
+                    array[j] = array[j - 1];
+                    array[j - 1] = temp;
+                    permut = false;
                 }
+                j--;
             }
-            permut = false;
+            permut = true;
         }
         return array;
     }
